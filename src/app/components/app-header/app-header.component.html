@@ -1,0 +1,31 @@
+<c-header>
+  <c-container fluid >
+    <c-header-brand [routerLink] class="fw-bold text-decoration-underline">MusiFindMe</c-header-brand>
+    <c-header-nav class="ms-auto">
+      <c-nav-item>
+        <a cNavLink routerLink="/components/alert">Помощь</a> <!-- TODO add proper links--> 
+      </c-nav-item>
+      <c-nav-item>
+        <a cNavLink routerLink="/components/alert">Люди</a>
+      </c-nav-item>
+      <c-nav-item>
+        <a cNavLink routerLink="/components/alert">События</a>
+      </c-nav-item>
+      <c-nav-item >
+        <a cNavLink routerLink="/components/alert">Профиль</a>
+      </c-nav-item>
+      <img cImg height="50" width="50" src="assets/img/angular400.jpg"  /> <!-- TODO add real image--> 
+      <c-dropdown alignment="end">
+        <a cHeaderToggler cDropdownToggle cNavLink [caret]="false"></a>
+        <ul cDropdownMenu>
+          <li><a [routerLink] cDropdownItem>Action</a></li>
+          <li><a [routerLink] cDropdownItem>Another action</a></li>
+          <li>
+            <hr cDropdownDivider>
+          </li>
+          <li><a [routerLink] cDropdownItem>Something else</a></li>
+        </ul>
+      </c-dropdown>
+    </c-header-nav>
+  </c-container>
+</c-header>

@@ -1,3 +1,8 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+// TODO add routes
+export const routes: Routes = [
+    // { path: 'help', component: HelpComponent },
+
+
+];

@@ -3,18 +3,18 @@
     <c-header-brand [routerLink] class="fw-bold text-decoration-underline">MusiFindMe</c-header-brand>
     <c-header-nav class="ms-auto">
       <c-nav-item>
-        <a cNavLink routerLink="/components/alert">Помощь</a> <!-- TODO add proper links--> 
+        <a cNavLink routerLink="/help">Помощь</a> <!-- TODO add proper links--> 
       </c-nav-item>
       <c-nav-item>
-        <a cNavLink routerLink="/components/alert">Люди</a>
+        <a cNavLink routerLink="/people">Люди</a>
       </c-nav-item>
       <c-nav-item>
-        <a cNavLink routerLink="/components/alert">События</a>
+        <a cNavLink routerLink="/events">События</a>
       </c-nav-item>
       <c-nav-item >
-        <a cNavLink routerLink="/components/alert">Профиль</a>
+        <a cNavLink routerLink="/profile">Профиль</a>
       </c-nav-item>
-      <img cImg height="50" width="50" src="assets/img/angular400.jpg"  /> <!-- TODO add real image--> 
+      <c-avatar src="../../assets/img/ted.jpg" ></c-avatar> <!-- TODO add real image--> 
       <c-dropdown alignment="end">
         <a cHeaderToggler cDropdownToggle cNavLink [caret]="false"></a>
         <ul cDropdownMenu>

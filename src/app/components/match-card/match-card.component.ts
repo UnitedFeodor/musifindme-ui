@@ -1,21 +1,56 @@
-import { Component } from '@angular/core';
-import { AvatarModule, CardModule, GridModule } from '@coreui/angular';
+import { Component, OnInit } from '@angular/core';
+import { AvatarModule, ButtonModule, CardModule, GridModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundcloud,cibYandex } from '@coreui/icons';
+import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundcloud,cibYandex, cibInstagram, cibTwitter } from '@coreui/icons';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { FlatUserDto } from '../../interfaces/user';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-match-card',
   standalone: true,
-  imports: [CardModule, GridModule, AvatarModule,IconModule, RouterLink ],
+  imports: [CardModule, GridModule, AvatarModule, IconModule, RouterLink, ButtonModule, CommonModule,],
   templateUrl: './match-card.component.html',
   styleUrl: './match-card.component.scss'
 })
-export class MatchCardComponent {
-  constructor(public iconSet: IconSetService) {
+export class MatchCardComponent implements OnInit{
+  user: FlatUserDto = {} as FlatUserDto;
+
+  socialIcons: { [key: string]: string } = {
+    twitter: 'cibTwitter',
+    instagram: 'cibInstagram',
+    vk: 'cibVk',
+    facebook: 'cibFacebook',
+    spotify: 'cibSpotify',
+    appleMusic: 'cibAppleMusic',
+    soundcloud: 'cibSoundcloud',
+    yandex: 'cibYandex'
+  };
+
+  constructor(public iconSet: IconSetService, private userService: UserService) {
     // iconSet singleton
     iconSet.icons = { 
-      cibTelegramPlane, cibVk, cibFacebook, cibSpotify, cibAppleMusic, cibSoundcloud, cibYandex, 
+      cibTelegramPlane, cibVk, cibFacebook, cibSpotify, cibAppleMusic, cibSoundcloud, cibYandex, cibInstagram, cibTwitter, 
     };
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    this.fetchUser()
+    
+  }
+
+  fetchUser(): void {
+    this.userService.getUser(2)
+      .subscribe(
+        (data: FlatUserDto) => {
+        this.user = data;
+        console.log('User fetched successfully:', data);
+      });
+  }
+
+  isSupportedSocial(network: string): boolean {
+    return this.socialIcons.hasOwnProperty(network.toLowerCase());
   }
 }

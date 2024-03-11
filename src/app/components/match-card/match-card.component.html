@@ -1,11 +1,24 @@
 <c-card class="p-5">
     <c-row>
         <c-col md="2">
+            <!-- TODO load pictures somehow -->
             <div class="text-center">
                 <img cImg height="200" src="assets/img/ted.jpg" style="max-width:100%; height: auto;" width="200" />
             </div>
             <h5 class="text-center" cCardTitle>Социальные сети </h5>
             <div style=" box-sizing: border-box; padding-inline: 5px;" class="text-center">
+                <ng-container *ngFor="let social of user.socials | keyvalue">
+                    <ng-container *ngIf="isSupportedSocial(social.key)">
+                        <!-- Add debug logging -->
+                        <!-- {{ social.key }}: {{ social.value }} : {{socialIcons[social.key.toLowerCase()]}} -->
+                        <!-- End of debug logging -->
+                        <a class="px-2" cNavLink routerLink={{social.value}}>
+                            <svg cIcon name="{{socialIcons[social.key.toLowerCase()]}}" size="xl"></svg>
+                        </a>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <!-- <div style=" box-sizing: border-box; padding-inline: 5px;" class="text-center">
                 <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibTelegramPlane" size="xl"></svg></a>
                 <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibVk" size="xl"></svg></a>
                 <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibFacebook" size="xl"></svg></a>
@@ -13,55 +26,66 @@
                 <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibAppleMusic" size="xl"></svg></a>
                 <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibSoundcloud" size="xl"></svg></a>    
                 <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibYandex" size="xl"></svg></a> 
-            </div>
+            </div> -->
         </c-col>
+        <!--TODO insert actual data-->
         <c-col md="3">
-                <h4 cCardTitle>Сигма Крипер, 21 </h4> <!-- TODO insert actual data -->
+                <h4 cCardTitle>{{user.name}}, {{user.age}} </h4> 
                 <h5 cCardTitle>Инстурменты </h5>
-                <p cCardText>
-                    Гитара, Бас, Барабаны и тд
+                <p cCardText *ngFor="let instrument of user.instruments; let last = last">
+                    {{ instrument.name }}{{ !last ? ', ' : '' }}
+                    <!-- {{ user.instruments.map((e: InstrumentDto) => e.name).join(', ') }} -->
+                    <!-- Гитара, Бас, Барабаны и тд -->
                 </p>
                 <h5 cCardTitle>Жанры </h5>
-                <p cCardText>
-                    Пост-панк, дрим-поп, шугейз
+                <p cCardText *ngFor="let genre of user.genres; let last = last">
+                    {{ genre.name }}{{ !last ? ', ' : '' }}
+                    <!-- Пост-панк, дрим-поп, шугейз -->
                 </p>
                 <h5 cCardTitle>Кого ищу </h5>
                 <p cCardText>
-                    Барабанщика в группу
+                    {{user.searchingFor}}
+                    <!-- Барабанщика в группу -->
                 </p>
         </c-col>
         <c-col md="3">
             <h4 cCardTitle>Минск </h4>
             <h5 cCardTitle>О себе </h5>
             <p cCardText>
-                This is a wider card with supporting text below as a natural lead-in to
+                {{user.description}}
+                <!-- This is a wider card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
+                additional content. This content is a little bit longer. -->
             </p>
             
         </c-col>
         <c-col md="3">
             <h4 cCardTitle>Музыка </h4>
             <h5 cCardTitle>Исполнители </h5>
-            <p cCardText>
-                гой дивижн, радиобэд, кофе из виталюра, дикпиксис
+            <p cCardText *ngFor="let artist of user.artists; let last = last">
+                {{ artist.name }}{{ !last ? ', ' : '' }}
+                <!-- гой дивижн, радиобэд, кофе из виталюра, дикпиксис -->
             </p>
             <h5 cCardTitle>Песни </h5>
-            <p cCardText>
-                я сосал у лимонова
+            <p cCardText *ngFor="let song of user.songs; let last = last">
+                {{ song.name }}{{ !last ? ', ' : '' }}
+                <!-- я сосал у лимонова -->
             </p>
-            <h5 cCardTitle>Альбомы </h5>
-            <p cCardText>
-                the money store - death grips
+            <h5 cCardTitle>Релизы </h5>
+            <p cCardText *ngFor="let release of user.releases; let last = last">
+                {{ release.name }}{{ !last ? ', ' : '' }}
+                <!-- the money store - death grips -->
             </p>
         </c-col>
     </c-row>
     <c-row>
-        <c-col col="10" >
-            
+        <c-col col="12" >
+            <div class="text-center">
+                <button cButton size="lg" color="primary">Следующий профиль</button>
+            </div>
             
         </c-col>
         
     </c-row>
-</c-card>
+</c-card> <!--TODO add "next" button -->

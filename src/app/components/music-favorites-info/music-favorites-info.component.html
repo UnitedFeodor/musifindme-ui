@@ -1,0 +1,19 @@
+<form [formGroup]="musicFavoritesInfoForm" (ngSubmit)="onSubmit()">
+    <!-- Input fields for personal info -->
+    <label>genres</label>
+    <input type="text" formControlName="genres">
+    
+    <label>artists</label>
+    <input type="text" formControlName="artists">
+    
+    <label>releases</label>
+    <input type="text" formControlName="releases">
+    <label>songs</label>
+    <input type="text" formControlName="songs">
+  
+    <!-- Button to change step -->
+    <!-- <button (click)="doChangeStep('forward')">Next</button> -->
+    <button (click)="doChangeStep('back')">Back</button>
+    <button type="submit">Submit</button>
+</form>
+  

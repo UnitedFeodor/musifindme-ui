@@ -1,0 +1,29 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+    <app-login-info 
+      *ngSwitchCase="'loginInfo'" 
+      [startingForm]="userForm.get('loginInfo')?.value" 
+      (subformInitialized)="subformInitialized('loginInfo', $event)" 
+      (changeStep)="changeStep('loginInfoStep', $event)"
+      
+    ></app-login-info>
+    <app-personal-info 
+      *ngSwitchCase="'personalInfo'" 
+      [startingForm]="userForm.get('personalInfo')?.value" 
+      (subformInitialized)="subformInitialized('personalInfo', $event)" 
+      (changeStep)="changeStep('personalInfoStep', $event)"
+      (submitForm)="submitForm()"
+    ></app-personal-info>
+    <app-search-info 
+      *ngSwitchCase="'searchInfo'" 
+      [startingForm]="userForm.get('searchInfo')?.value" 
+      (subformInitialized)="subformInitialized('searchInfo', $event)" 
+      (changeStep)="changeStep('searchInfoStep', $event)"
+    ></app-search-info>
+    <app-music-favorites-info 
+      *ngSwitchCase="'musicFavoritesInfo'" 
+      [startingForm]="userForm.get('musicFavoritesInfo')?.value" 
+      (subformInitialized)="subformInitialized('musicFavoritesInfo', $event)" 
+      (changeStep)="changeStep('musicFavoritesInfoStep', $event)"
+    ></app-music-favorites-info >
+    
+</ng-container>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CardModule, GridModule, AvatarModule, ButtonModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
@@ -8,19 +8,18 @@ import { FlatUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundcloud,cibYandex, cibInstagram, cibTwitter } from '@coreui/icons';
 
+
 @Component({
-  selector: 'app-profile-card',
+  selector: 'app-edit-profile-card',
   standalone: true,
   imports: [CardModule, GridModule, AvatarModule, IconModule, RouterLink, ButtonModule, CommonModule,],
-  templateUrl: './profile-card.component.html',
-  styleUrl: './profile-card.component.scss'
+  templateUrl: './edit-profile-card.component.html',
+  styleUrl: './edit-profile-card.component.scss'
 })
-export class ProfileCardComponent implements OnInit{
+export class EditProfileCardComponent {
   user: FlatUserDto = {} as FlatUserDto;
   isObjectNotEmpty = isObjectNotEmpty
   socialIcons: { [key: string]: string } = socialIcons
-  @Input() editButtonLabel: string = ''; // TODO maybe change to something else
-  @Input() editButtonRouterLink: string = '';
 
   
   constructor(public iconSet: IconSetService, private userService: UserService) {
@@ -48,7 +47,6 @@ export class ProfileCardComponent implements OnInit{
   isSupportedSocial(network: string): boolean {
     return this.socialIcons.hasOwnProperty(network.toLowerCase());
   }
-
 
 
 }

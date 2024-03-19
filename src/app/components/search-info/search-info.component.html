@@ -1,0 +1,17 @@
+<div [formGroup]="searchInfoForm" >
+    <!-- Input fields for personal info -->
+    <label>Search for</label>
+    <input type="text" formControlName="searchingFor">
+    
+    
+    <label>description</label>
+    <input type="text" formControlName="description">
+    
+    <label>instruments</label>
+    <input type="text" formControlName="instruments">
+  
+    <!-- Button to change step -->
+    <button (click)="doChangeStep('forward')">Next</button>
+    <button (click)="doChangeStep('back')">Back</button>
+</div>
+  

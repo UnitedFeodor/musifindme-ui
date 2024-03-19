@@ -1,0 +1,20 @@
+<div [formGroup]="personalInfoForm" >
+    <!-- Input fields for personal info -->
+    <label>Name</label>
+    <input type="text" formControlName="name">
+    
+    <label>Age</label>
+    <input type="number" formControlName="age">
+    
+    <label>City</label>
+    <input type="text" formControlName="city">
+    
+    <label>Socials</label>
+    <input type="text" formControlName="socials">
+  
+    <!-- Button to change step -->
+    <button (click)="doChangeStep('forward')">Next</button>
+    <button (click)="doChangeStep('back')">Back</button>
+    
+</div>
+  

@@ -1,0 +1,13 @@
+<div [formGroup]="loginInfoForm">
+    <label for="email">Email</label>
+    <input type="email" id="email" formControlName="email">
+    
+    <label for="password">Password</label>
+    <input type="password" id="password" formControlName="password">
+  
+    <!-- Add any other form fields or content here -->
+  
+    <!-- <button type="submit">Submit</button> -->
+    <button (click)="doChangeStep('forward')">Next</button>
+  </div>
+  

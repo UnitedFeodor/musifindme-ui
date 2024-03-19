@@ -1,4 +1,6 @@
 <ng-container [ngSwitch]="currentStep$ | async">
+  <h3 class="text-center py-3" cCardTitle> Регистрация </h3>  
+  <c-card>
     <app-login-info 
       *ngSwitchCase="'loginInfo'" 
       [startingForm]="userForm.get('loginInfo')?.value" 
@@ -11,7 +13,6 @@
       [startingForm]="userForm.get('personalInfo')?.value" 
       (subformInitialized)="subformInitialized('personalInfo', $event)" 
       (changeStep)="changeStep('personalInfoStep', $event)"
-      (submitForm)="submitForm()"
     ></app-personal-info>
     <app-search-info 
       *ngSwitchCase="'searchInfo'" 
@@ -24,6 +25,8 @@
       [startingForm]="userForm.get('musicFavoritesInfo')?.value" 
       (subformInitialized)="subformInitialized('musicFavoritesInfo', $event)" 
       (changeStep)="changeStep('musicFavoritesInfoStep', $event)"
+      (submitForm)="submitForm()"
     ></app-music-favorites-info >
-    
+  </c-card>
+
 </ng-container>

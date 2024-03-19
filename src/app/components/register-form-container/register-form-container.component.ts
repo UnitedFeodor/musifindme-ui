@@ -6,6 +6,7 @@ import { LoginInfoComponent } from "../login-info/login-info.component";
 import { CommonModule } from '@angular/common';
 import { SearchInfoComponent } from "../search-info/search-info.component";
 import { MusicFavoritesInfoComponent } from "../music-favorites-info/music-favorites-info.component";
+import { CardModule } from '@coreui/angular';
 
 export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavoritesInfo';
 @Component({
@@ -13,7 +14,7 @@ export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavorites
     standalone: true,
     templateUrl: './register-form-container.component.html',
     styleUrl: './register-form-container.component.scss',
-    imports: [PersonalInfoComponent, LoginInfoComponent, CommonModule, ReactiveFormsModule, SearchInfoComponent, MusicFavoritesInfoComponent]
+    imports: [CardModule ,PersonalInfoComponent, LoginInfoComponent, CommonModule, ReactiveFormsModule, SearchInfoComponent, MusicFavoritesInfoComponent]
 })
 export class RegisterFormContainerComponent implements OnInit {
 

@@ -1,13 +1,24 @@
-<div [formGroup]="loginInfoForm">
-    <label for="email">Email</label>
-    <input type="email" id="email" formControlName="email">
+  <form [formGroup]="loginInfoForm" class="p-5">
     
-    <label for="password">Password</label>
-    <input type="password" id="password" formControlName="password">
-  
-    <!-- Add any other form fields or content here -->
-  
-    <!-- <button type="submit">Submit</button> -->
-    <button (click)="doChangeStep('forward')">Next</button>
-  </div>
-  
+  <c-row class="g-3">
+    <c-col md="6">
+        <label cLabel for="email">Эл. почта</label>
+        <input cFormControl placeholder="mymail@mail.com" type="email" id="email" formControlName="email">
+    </c-col>
+    <c-col md="6">
+      <!-- <div class="text-center"> -->
+        <label cLabel for="password">Пароль</label>
+        <input cFormControl type="password" id="password" formControlName="password">
+      <!-- </div> -->
+    </c-col>
+  </c-row>
+  <c-row class="g-3 py-2">
+    <c-col md="6">
+
+    </c-col>
+    <c-col md="6">
+      <button cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
+    </c-col>
+  </c-row>
+</form>
+ 

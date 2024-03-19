@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Step } from '../register-form-container/register-form-container.component';
 import { CommonModule } from '@angular/common';
+import { CardModule, FormModule, GridModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-login-info',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, CardModule, GridModule, FormModule,],
   templateUrl: './login-info.component.html',
   styleUrl: './login-info.component.scss'
 })

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { CardModule, GridModule, FormModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-music-favorites-info',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, CardModule, GridModule, FormModule,],
   templateUrl: './music-favorites-info.component.html',
   styleUrl: './music-favorites-info.component.scss'
 })

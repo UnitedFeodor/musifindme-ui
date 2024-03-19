@@ -1,17 +1,33 @@
-<div [formGroup]="searchInfoForm" >
-    <!-- Input fields for personal info -->
-    <label>Search for</label>
-    <input type="text" formControlName="searchingFor">
+<form [formGroup]="searchInfoForm" class="p-5">
     
-    
-    <label>description</label>
-    <input type="text" formControlName="description">
-    
-    <label>instruments</label>
-    <input type="text" formControlName="instruments">
+    <c-row class="g-3">
+        <c-col md="4">
+            <label cLabel for="searchingFor">Кого ищу</label>
+            <textarea rows="4" cFormControl placeholder="Барабанщика в группу" type="text" id="searchingFor" formControlName="searchingFor"></textarea>
+        </c-col>
+    <c-col md="4">
+        <label cLabel for="description">О себе</label>
+        <textarea rows="4" cFormControl placeholder="Играю на гитаре и пою" type="text" id="description" formControlName="description"></textarea>
+    </c-col>
+    <c-col md="4">
+        <label cLabel for="instruments">Инстурменты</label>
+        <input cFormControl placeholder="пока хз" type="text" id="instruments" formControlName="instruments">
+    </c-col>
+
+    </c-row>   
   
     <!-- Button to change step -->
-    <button (click)="doChangeStep('forward')">Next</button>
-    <button (click)="doChangeStep('back')">Back</button>
-</div>
+    <c-row class="g-3 py-2">
+        <c-col md="12">
+            <div class="text-center">
+                <span class="px-2">
+                    <button cFormControl type="button"  (click)="doChangeStep('back')" class="btn btn-light ">Назад</button>
+                </span>
+                <span class="px-2">
+                    <button cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
+                </span> 
+            </div>
+        </c-col>
+    </c-row>
+</form>
   

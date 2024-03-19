@@ -1,20 +1,43 @@
-<div [formGroup]="personalInfoForm" >
+<form [formGroup]="personalInfoForm" class="p-5">
     <!-- Input fields for personal info -->
-    <label>Name</label>
-    <input type="text" formControlName="name">
+    <c-row class="g-3">
+        <c-col md="4">
+            <label cLabel for="name">Имя</label>
+            <input cFormControl placeholder="Полиграф Полиграфыч" type="text" id="name" formControlName="name">
+        </c-col>
+    <c-col md="4">
+        <label cLabel for="age">Возраст</label>
+        <input cFormControl placeholder="21" type="number" id="age" formControlName="age">
+    </c-col>
+    <c-col md="4">
+        <label cLabel for="city">Город</label>
+        <input cFormControl placeholder="Петушки" type="text" id="city" formControlName="city">
+    </c-col>
+    </c-row>    
+    <c-row class="g-3">
+        <c-col md="12">
+            <label cLabel for="socials">Socials</label>
+            <input cFormControl placeholder="spoopify" type="text" id="socials" formControlName="socials">
+        </c-col>
+    </c-row>
     
-    <label>Age</label>
-    <input type="number" formControlName="age">
     
-    <label>City</label>
-    <input type="text" formControlName="city">
-    
-    <label>Socials</label>
-    <input type="text" formControlName="socials">
   
+    <c-row class="g-3 py-2">
+        <c-col md="12">
+            <div class="text-center">
+                <span class="px-2">
+                    <button cFormControl type="button"  (click)="doChangeStep('back')" class="btn btn-light ">Назад</button>
+                </span>
+                <span class="px-2">
+                    <button cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
+                </span> 
+            </div>
+        </c-col>
+    </c-row>
     <!-- Button to change step -->
-    <button (click)="doChangeStep('forward')">Next</button>
-    <button (click)="doChangeStep('back')">Back</button>
+    <!-- <button (click)="doChangeStep('forward')">Next</button> -->
+    <!-- <button (click)="doChangeStep('back')">Back</button> -->
     
-</div>
+</form>
   

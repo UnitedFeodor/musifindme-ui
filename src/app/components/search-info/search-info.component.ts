@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CardModule, GridModule, FormModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-search-info',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule ],
+  imports: [ReactiveFormsModule, CommonModule, CardModule, GridModule, FormModule, ],
   templateUrl: './search-info.component.html',
   styleUrl: './search-info.component.scss'
 })

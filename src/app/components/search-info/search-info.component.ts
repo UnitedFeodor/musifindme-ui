@@ -24,25 +24,14 @@ export class SearchInfoComponent {
  
   ngOnInit() {
     if (this.startingForm){
-      console.log(`ngOnInit in if`)
       let startFormValue: any = this.startingForm;
       console.log('startFormValue',startFormValue)
 
-      // console.log(`let startFormValue in if`)
       this.searchInfoForm = this._fb.group({
         searchingFor: [startFormValue.searchingFor, [Validators.required]],
         description: [startFormValue.description, [Validators.required]],
         instruments: [startFormValue.instruments, [Validators.required]],
       });
-
-      
-
-      this.searchInfoForm.get('searchingFor')!.setValidators([Validators.required]);
-      this.searchInfoForm.get('description')!.setValidators([Validators.required]);
-
-      this.searchInfoForm.setControl('instruments', new FormControl(startFormValue.instruments,[Validators.required]))
-      
-      // this.searchInfoForm.get('instruments')!.setValidators([Validators.required]);
 
       this.searchInfoForm.get('searchingFor')!.updateValueAndValidity();
       this.searchInfoForm.get('description')!.updateValueAndValidity();

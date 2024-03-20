@@ -82,7 +82,7 @@
                     <button cFormControl type="button"  (click)="doChangeStep('back')" class="btn btn-light ">Назад</button>
                 </span>
                 <span class="px-2">
-                    <button cFormControl type="submit" class="btn btn-primary">Сохранить</button>
+                    <button [disabled]="musicFavoritesInfoForm.invalid" cFormControl type="submit" class="btn btn-primary">Сохранить</button>
                 </span> 
             </div>
         </c-col>

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { CardModule, GridModule, FormModule } from '@coreui/angular';
 import { FlatArtistDto, FlatGenreDto, FlatInstrumentDto, FlatReleaseDto, FlatReleaseWtihArtistsDto, FlatSongDto, FlatSongWithArtistsDto } from '../../interfaces/user';
 import { GenreService } from '../../services/genre.service';
@@ -39,13 +39,29 @@ item: any;
  
   ngOnInit() {
     if (this.startingForm){
-      this.musicFavoritesInfoForm = this._fb.group(this.startingForm)
+
+      let startFormValue: any = this.startingForm;
+      console.log('startFormValue',startFormValue)
+
+      // console.log(`let startFormValue in if`)
+      this.musicFavoritesInfoForm = this._fb.group({
+        genres: [startFormValue.genres, [Validators.required]],
+        artists: [startFormValue.artists, [Validators.required]],
+        releases: [startFormValue.releases, [Validators.required]],
+        songs: [startFormValue.songs, [Validators.required]],
+      });
+
+      this.musicFavoritesInfoForm.get('genres')!.updateValueAndValidity();
+      this.musicFavoritesInfoForm.get('artists')!.updateValueAndValidity();
+      this.musicFavoritesInfoForm.get('releases')!.updateValueAndValidity();
+      this.musicFavoritesInfoForm.get('songs')!.updateValueAndValidity();
+
     } else {
       this.musicFavoritesInfoForm = this._fb.group({
-        genres: '',
-        artists: '',
-        releases: '',
-        songs: '',
+        genres: [[],[Validators.required]],
+        artists: [[],[Validators.required]],
+        releases: [[],[Validators.required]],
+        songs: [[],[Validators.required]],
       })
     }
     this.loadArtists();

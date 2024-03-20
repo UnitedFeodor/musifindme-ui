@@ -23,6 +23,7 @@
     "@coreui/icons-angular": "^4.7.14",
     "bootstrap": "^5.3.3",
     "rxjs": "~7.8.0",
+    "social-profile-url-parser": "^1.0.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

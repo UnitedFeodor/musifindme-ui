@@ -5,22 +5,48 @@
             <label cLabel for="name">Имя</label>
             <input cFormControl placeholder="Полиграф Полиграфыч" type="text" id="name" formControlName="name">
         </c-col>
-    <c-col md="4">
-        <label cLabel for="age">Возраст</label>
-        <input cFormControl placeholder="21" type="number" id="age" formControlName="age">
-    </c-col>
-    <c-col md="4">
-        <label cLabel for="city">Город</label>
-        <input cFormControl placeholder="Петушки" type="text" id="city" formControlName="city">
-    </c-col>
-    </c-row>    
-    <c-row class="g-3">
-        <c-col md="12">
-            <label cLabel for="socials">Socials</label>
-            <input cFormControl placeholder="spoopify" type="text" id="socials" formControlName="socials">
+        <c-col md="4">
+            <label cLabel for="age">Возраст</label>
+            <input cFormControl placeholder="21" type="number" id="age" formControlName="age">
         </c-col>
-    </c-row>
-    
+        <c-col md="4">
+            <label cLabel for="city">Город</label>
+            <input cFormControl placeholder="Петушки" type="text" id="city" formControlName="city">
+        </c-col>
+    </c-row>    
+    <c-row class="g-3 py-2">
+        
+        <c-col md="12">
+            <span>
+                <label cLabel>Социальные сети</label>
+            </span>
+            <span class="px-2">
+                <button type="button" class="btn btn-success btn-sm"  (click)="addSocial()">+</button>
+            </span>
+          
+            <div formArrayName="socials">
+                <div *ngFor="let social of socials.controls; let i = index" [formGroupName]="i">
+                    <c-row class="mt-3">
+                        <c-input-group>
+                        <!-- <c-col md="8"> -->
+                            <input cFormControl placeholder="Ссылка" type="text" formControlName="link">
+                        <!-- </c-col> -->
+                        <!-- <c-col md="4"> -->
+                            <button type="button" class="btn btn-danger"(click)="removeSocial(i)">-</button>
+                        <!-- </c-col> -->
+                        </c-input-group>
+                    </c-row>
+                    
+                    
+                    
+                </div>
+            </div>
+          
+        </c-col>
+      </c-row>
+      
+ 
+    <!--TODO add validation--> 
     
   
     <c-row class="g-3 py-2">

@@ -29,7 +29,7 @@
                     <button cFormControl type="button"  (click)="doChangeStep('back')" class="btn btn-light ">Назад</button>
                 </span>
                 <span class="px-2">
-                    <button cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
+                    <button [disabled]="searchInfoForm.invalid" cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
                 </span> 
             </div>
         </c-col>
@@ -37,6 +37,6 @@
 </form>
 <ng-template #loadingBlock >
     
-    <div style="height: 80vh;display: flex; justify-content: center; align-items: center;"> <h5>Loading...</h5> </div>
+    <div style="display: flex; justify-content: center; align-items: center;"> <h5>Loading...</h5> </div>
     
 </ng-template>

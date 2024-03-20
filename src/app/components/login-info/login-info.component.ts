@@ -25,7 +25,7 @@ export class LoginInfoComponent implements OnInit {
       this.loginInfoForm = this._fb.group(this.startingForm)
 
       this.loginInfoForm.get('email')!.setValidators([Validators.required, Validators.email]);
-      this.loginInfoForm!!.get('password')!.setValidators(Validators.required);
+      this.loginInfoForm.get('password')!.setValidators([Validators.required]);
 
       // Update validity after adding validators
       this.loginInfoForm.get('email')!.updateValueAndValidity();

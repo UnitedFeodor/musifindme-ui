@@ -36,7 +36,7 @@ export class PersonalInfoComponent implements OnInit {
         // Check if the 'link' property is not empty before adding it to the FormArray
         if (social.link.trim() !== '') {
           const socialFormGroup = this._fb.group({
-            link: social.link, // Assuming each social object has a 'link' property
+            link: social.link, 
           });
           socialsFormArray.push(socialFormGroup);
         }
@@ -57,7 +57,7 @@ export class PersonalInfoComponent implements OnInit {
     this.subformInitialized.emit(this.personalInfoForm);
   }  
   
-  nonEmptySocialLinksValidator(): ValidatorFn {
+   nonEmptySocialLinksValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const socialsArray = control as FormArray;
       const hasEmptyString = socialsArray.controls.some(control => control.value.link.trim() === '');

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardModule, GridModule, FormModule } from '@coreui/angular';
 import { InstrumentService } from '../../services/instrument.service';
 import { FlatInstrumentDto } from '../../interfaces/user';
@@ -24,13 +24,38 @@ export class SearchInfoComponent {
  
   ngOnInit() {
     if (this.startingForm){
-      this.searchInfoForm = this._fb.group(this.startingForm)
+      console.log(`ngOnInit in if`)
+      let startFormValue: any = this.startingForm;
+      console.log('startFormValue',startFormValue)
+
+      // console.log(`let startFormValue in if`)
+      this.searchInfoForm = this._fb.group({
+        searchingFor: [startFormValue.searchingFor, [Validators.required]],
+        description: [startFormValue.description, [Validators.required]],
+        instruments: [startFormValue.instruments, [Validators.required]],
+      });
+
+      
+
+      this.searchInfoForm.get('searchingFor')!.setValidators([Validators.required]);
+      this.searchInfoForm.get('description')!.setValidators([Validators.required]);
+
+      this.searchInfoForm.setControl('instruments', new FormControl(startFormValue.instruments,[Validators.required]))
+      
+      // this.searchInfoForm.get('instruments')!.setValidators([Validators.required]);
+
+      this.searchInfoForm.get('searchingFor')!.updateValueAndValidity();
+      this.searchInfoForm.get('description')!.updateValueAndValidity();
+      this.searchInfoForm.get('instruments')!.updateValueAndValidity();
+      console.log('searchForm',this.searchInfoForm)
+
     } else {
       this.searchInfoForm = this._fb.group({
-        searchingFor: '',
-        description: '',
-        instruments: '',
+        searchingFor: ['', [Validators.required]],
+        description: ['', [Validators.required]],
+        instruments: [[], [Validators.required]],
       })
+      console.log('searchForm default',this.searchInfoForm)
     }
     this.loadInstruments();
     this.subformInitialized.emit(this.searchInfoForm);

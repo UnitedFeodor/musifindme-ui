@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule, FormArray, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CardModule, FormModule, GridModule } from '@coreui/angular';
 
@@ -23,10 +23,10 @@ export class PersonalInfoComponent implements OnInit {
 
       let startFormValue: any = this.startingForm;
       this.personalInfoForm = this._fb.group({
-        name: startFormValue['name'],
-        age: startFormValue['age'],
-        city: startFormValue['city'],
-        socials: this._fb.array([]), // Initialize as empty FormArray
+        name: [startFormValue['name'],[Validators.required]],
+        age: [startFormValue['age'],[Validators.required]],
+        city: [startFormValue['city'],[Validators.required]],
+        socials: this._fb.array([],[Validators.required, this.nonEmptySocialLinksValidator()]), // Initialize as empty FormArray
       });
   
       // Populate socials FormArray with existing social media inputs
@@ -46,19 +46,25 @@ export class PersonalInfoComponent implements OnInit {
       
     } else {
       this.personalInfoForm = this._fb.group({
-        name: [''],
-        age: [''],
-        city: [''],
-        socials: this._fb.array([]),
+        name: ['', Validators.required],
+        age: ['', Validators.required],
+        city: ['', Validators.required],
+        socials: this._fb.array([],[Validators.required, this.nonEmptySocialLinksValidator()]),
       });
       console.log(`new fomr`,this.personalInfoForm)
       // this.addSocial(); // Add one initial social input
     }
     this.subformInitialized.emit(this.personalInfoForm);
+  }  
+  
+  nonEmptySocialLinksValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const socialsArray = control as FormArray;
+      const hasEmptyString = socialsArray.controls.some(control => control.value.link.trim() === '');
+      return hasEmptyString ? { 'emptySocialLinks': true } : null;
+    };
   }
 
-  
-  
   get socials(): FormArray {
     console.log(`get socials  `,this.personalInfoForm.get('socials') as FormArray)
     return this.personalInfoForm.get('socials') as FormArray;

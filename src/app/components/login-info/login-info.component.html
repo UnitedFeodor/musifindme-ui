@@ -17,7 +17,7 @@
 
     </c-col>
     <c-col md="6">
-      <button cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
+      <button [disabled]="loginInfoForm.invalid" cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
     </c-col>
   </c-row>
 </form>

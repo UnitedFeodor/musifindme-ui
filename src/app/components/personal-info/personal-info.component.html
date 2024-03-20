@@ -56,7 +56,7 @@
                     <button cFormControl type="button"  (click)="doChangeStep('back')" class="btn btn-light ">Назад</button>
                 </span>
                 <span class="px-2">
-                    <button cFormControl type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
+                    <button cFormControl [disabled]="personalInfoForm.invalid" type="button" (click)="doChangeStep('forward')" class="btn btn-primary">Далее</button>
                 </span> 
             </div>
         </c-col>

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule, FormArray, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule, FormArray, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CardModule, FormModule, GridModule } from '@coreui/angular';
+import { isSupportedSocialByLink, isSupportedSocialByName } from '../../app.utils';
 
 @Component({
   selector: 'app-personal-info',
@@ -18,6 +19,8 @@ export class PersonalInfoComponent implements OnInit {
   public personalInfoForm!: FormGroup;
   constructor(private _fb: FormBuilder) {}
  
+  isSupportedSocialByLink = isSupportedSocialByLink
+
   ngOnInit() {
     if (this.startingForm) {
 
@@ -26,14 +29,21 @@ export class PersonalInfoComponent implements OnInit {
         name: [startFormValue['name'],[Validators.required]],
         age: [startFormValue['age'],[Validators.required]],
         city: [startFormValue['city'],[Validators.required]],
-        socials: this._fb.array([],[Validators.required, this.nonEmptySocialLinksValidator()]), // Initialize as empty FormArray
+        socials: this._fb.array(
+          [],
+          [
+            Validators.required, 
+            this.nonEmptySocialLinksValidator(),
+            this.socialLinkValidator()
+          ]
+        ), // Initialize as empty FormArray
       });
   
       // Populate socials FormArray with existing social media inputs
       const socialsFormArray = this.personalInfoForm.get('socials') as FormArray;
       const startingSocials = startFormValue.socials || [];
       startingSocials.forEach((social: any) => {
-        // Check if the 'link' property is not empty before adding it to the FormArray
+
         if (social.link.trim() !== '') {
           const socialFormGroup = this._fb.group({
             link: social.link, 
@@ -49,19 +59,48 @@ export class PersonalInfoComponent implements OnInit {
         name: ['', Validators.required],
         age: ['', Validators.required],
         city: ['', Validators.required],
-        socials: this._fb.array([],[Validators.required, this.nonEmptySocialLinksValidator()]),
+        socials: this._fb.array(
+          [],
+          [
+            Validators.required, 
+            this.nonEmptySocialLinksValidator(),
+            this.socialLinkValidator()
+          ]
+        ),
       });
-      console.log(`new fomr`,this.personalInfoForm)
-      // this.addSocial(); // Add one initial social input
+      console.log(`new form`,this.personalInfoForm)
     }
     this.subformInitialized.emit(this.personalInfoForm);
   }  
   
-   nonEmptySocialLinksValidator(): ValidatorFn {
+  nonEmptySocialLinksValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const socialsArray = control as FormArray;
       const hasEmptyString = socialsArray.controls.some(control => control.value.link.trim() === '');
       return hasEmptyString ? { 'emptySocialLinks': true } : null;
+    };
+  }
+
+  
+  socialLinkValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const socialsArray = control as FormArray;
+      const errors: ValidationErrors = {};
+  
+      socialsArray.controls.forEach((socialControl, index) => {
+        const link = socialControl.value.link.trim();
+        
+        console.log('trimmed link', link); // TODO parse name on submit to save in proper json for post
+        if (!link) {
+          errors[`emptyLink${index}`] = 'Link is required.';
+        } else {
+          if (!isSupportedSocialByLink(link)) {
+            errors[`unsupportedSocial${index}`] = 'Unsupported social network.';
+          }
+        }
+      });
+  
+      return Object.keys(errors).length ? errors : null;
     };
   }
 
@@ -71,7 +110,6 @@ export class PersonalInfoComponent implements OnInit {
   }
   
   addSocial() {
-    // let socialFormGroup = new FormControl('')
     const socialFormGroup = this._fb.group({
       link: ['']
     });
@@ -82,7 +120,6 @@ export class PersonalInfoComponent implements OnInit {
   removeSocial(index: number) {
     this.socials.removeAt(index);
   }
-  
 
   doChangeStep(direction: 'forward' | 'back') {
     this.changeStep.emit(direction);

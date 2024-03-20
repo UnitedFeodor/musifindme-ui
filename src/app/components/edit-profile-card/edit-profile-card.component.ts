@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CardModule, GridModule, AvatarModule, ButtonModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { isObjectNotEmpty, socialIcons } from '../../app.utils';
+import { isObjectNotEmpty, isSupportedSocialByName, socialIcons } from '../../app.utils';
 import { FlatUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundcloud,cibYandex, cibInstagram, cibTwitter } from '@coreui/icons';
@@ -19,13 +19,23 @@ import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundclo
 export class EditProfileCardComponent {
   user: FlatUserDto = {} as FlatUserDto;
   isObjectNotEmpty = isObjectNotEmpty
-  socialIcons: { [key: string]: string } = socialIcons
-
+  isSupportedSocial = isSupportedSocialByName
+  socialIcons = socialIcons
   
   constructor(public iconSet: IconSetService, private userService: UserService) {
     // iconSet singleton
     iconSet.icons = { 
-      cibTelegramPlane, cibVk, cibFacebook, cibSpotify, cibAppleMusic, cibSoundcloud, cibYandex, cibInstagram, cibTwitter, 
+      cibTelegramPlane, 
+      cibVk, 
+      cibFacebook, 
+      cibSpotify, 
+
+      cibAppleMusic, 
+      cibSoundcloud, 
+      cibYandex, 
+      cibInstagram,
+
+      cibTwitter, 
     };
   }
 
@@ -44,9 +54,7 @@ export class EditProfileCardComponent {
       });
   }
 
-  isSupportedSocial(network: string): boolean {
-    return this.socialIcons.hasOwnProperty(network.toLowerCase());
-  }
+  
 
 
 }

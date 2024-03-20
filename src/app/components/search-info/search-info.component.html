@@ -11,7 +11,12 @@
     </c-col>
     <c-col md="4">
         <label cLabel for="instruments">Инстурменты</label>
-        <input cFormControl placeholder="пока хз" type="text" id="instruments" formControlName="instruments">
+        <ng-container *ngIf="instruments; else loadingBlock">
+            <ng-select cFormControl id="instruments" formControlName="instruments" [items]="instruments"
+               bindLabel="name" bindValue="id" placeholder="Выберите инструмент" [multiple]="true">
+             </ng-select>
+
+        </ng-container>
     </c-col>
 
     </c-row>   
@@ -30,4 +35,8 @@
         </c-col>
     </c-row>
 </form>
-  
+<ng-template #loadingBlock >
+    
+    <div style="height: 80vh;display: flex; justify-content: center; align-items: center;"> <h5>Loading...</h5> </div>
+    
+</ng-template>

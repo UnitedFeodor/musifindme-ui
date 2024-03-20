@@ -21,6 +21,7 @@
     "@coreui/angular": "^4.7.15",
     "@coreui/coreui": "^4.3.2",
     "@coreui/icons-angular": "^4.7.14",
+    "@ng-select/ng-select": "^12.0.7",
     "bootstrap": "^5.3.3",
     "rxjs": "~7.8.0",
     "social-profile-url-parser": "^1.0.0",

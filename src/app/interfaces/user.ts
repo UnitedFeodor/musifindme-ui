@@ -13,6 +13,37 @@ export interface FlatUserDto {
     releases: FlatReleaseDto[];
     songs: FlatSongDto[];
   }
+export interface CreateUserDto {
+    name: string;
+    age: number;
+    city: string;
+    description: string;
+    searchingFor: string;
+    socials: { [key: string]: string };
+    email: string;
+    password: string;
+    artists: number[];
+    genres: number[];
+    instruments: number[];
+    releases: number[];
+    songs: number[];
+  }
+  
+  export interface FullUserDto {
+    id: number;
+    name: string;
+    age: number;
+    city: string;
+    description: string;
+    searchingFor: string;
+    socials: { [key: string]: string };
+    email: string;
+    artists: FlatArtistDto[];
+    genres: FlatGenreDto[];
+    instruments: FlatInstrumentDto[];
+    releases: FlatReleaseDto[];
+    songs: FlatSongDto[];
+  }
   
 export interface FlatArtistDto {
     id: number;

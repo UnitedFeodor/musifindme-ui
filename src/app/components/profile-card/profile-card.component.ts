@@ -37,7 +37,7 @@ export class ProfileCardComponent implements OnInit{
   }
 
   fetchUser(): void {
-    this.userService.getUser(2)
+    this.userService.getUser(21)
       .subscribe(
         (data: FlatUserDto) => {
         this.user = data;

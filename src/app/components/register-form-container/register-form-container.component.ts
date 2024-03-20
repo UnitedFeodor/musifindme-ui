@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { SearchInfoComponent } from "../search-info/search-info.component";
 import { MusicFavoritesInfoComponent } from "../music-favorites-info/music-favorites-info.component";
 import { CardModule } from '@coreui/angular';
+import { CreateUserDto } from '../../interfaces/user';
+import { UserService } from '../../services/user.service';
 
 export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavoritesInfo';
 @Component({
@@ -21,7 +23,9 @@ export class RegisterFormContainerComponent implements OnInit {
   private currentStepBs: BehaviorSubject<Step> = new BehaviorSubject<Step>('loginInfo');
   public currentStep$: Observable<Step> = this.currentStepBs.asObservable();
   public userForm!: FormGroup;
-  constructor(private _fb: FormBuilder) {}
+
+  constructor(private _fb: FormBuilder, private userService: UserService) {}
+
   ngOnInit() {
     this.userForm = this._fb.group({
       personalInfo: null,
@@ -65,7 +69,41 @@ export class RegisterFormContainerComponent implements OnInit {
   }
   submitForm() {
     const formValues = this.userForm.value;
-    // submit the form with a service
-    console.log('submit form')
+    console.log('submit formVaues',formValues)
+    const createUserDto = this.mapFormDataToCreateUserDto(formValues)
+    console.log('submit createUserDto',createUserDto)
+
+    this.userService.createUser(createUserDto).subscribe(
+      (response) => {
+        // Handle success response
+        console.log('User created successfully:', response);
+      },
+      (error) => {
+        // Handle error response
+        console.error('Error creating user:', error);
+      }
+    );
+  }
+
+  mapFormDataToCreateUserDto(data: any): CreateUserDto {
+    const mappedData: CreateUserDto = {
+      name: data.personalInfo.name,
+      age: data.personalInfo.age,
+      city: data.personalInfo.city,
+      description: data.searchInfo.description,
+      searchingFor: data.searchInfo.searchingFor,
+      socials: data.personalInfo.socials.reduce((acc: any, curr: any, index: number) => {
+        acc[`additionalProp${index + 1}`] = curr.link;
+        return acc;
+      }, {}), // TODO parse link names of social networks
+      email: data.loginInfo.email,
+      password: data.loginInfo.password,
+      artists: data.musicFavoritesInfo.artists,
+      genres: data.musicFavoritesInfo.genres,
+      instruments: data.searchInfo.instruments,
+      releases: data.musicFavoritesInfo.releases.map((release: any) => release.id),
+      songs: data.musicFavoritesInfo.songs.map((song: any) => song.id)
+    };
+    return mappedData;
   }
 }

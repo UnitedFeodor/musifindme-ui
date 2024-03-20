@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FlatUserDto } from '../interfaces/user';
-import { HttpClient  } from '@angular/common/http';
+import { CreateUserDto, FlatUserDto, FullUserDto } from '../interfaces/user';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
 
 @Injectable({
@@ -20,6 +20,20 @@ export class UserService {
         catchError(this.handleError<FlatUserDto>('getUser'))
       );
     
+  }
+
+  createUser(userDto: CreateUserDto): Observable<FullUserDto> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<FullUserDto>(this.apiUrl, userDto, httpOptions)
+      .pipe(
+        tap(user => console.log('User created successfully',user)),
+        catchError(this.handleError<FullUserDto>('createUser'))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

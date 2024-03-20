@@ -9,7 +9,7 @@ export interface FlatUserDto {
     email: string;
     artists: FlatArtistDto[];
     genres: GenreDto[];
-    instruments: InstrumentDto[];
+    instruments: FlatInstrumentDto[];
     releases: FlatReleaseDto[];
     songs: FlatSongDto[];
   }
@@ -22,9 +22,10 @@ export interface FlatArtistDto {
 export interface GenreDto {
     id: number;
     name: string;
+  
   }
   
-export interface InstrumentDto {
+export interface FlatInstrumentDto {
     id: number;
     name: string;
   }

@@ -3,21 +3,70 @@
     <c-row class="g-3">
         <c-col md="6">
             <label cLabel for="genres">Жанры</label>
-            <input cFormControl placeholder="хз-панк" type="text" id="genres" formControlName="genres">
+            <ng-container *ngIf="genres; else loadingBlock">
+                <ng-select cFormControl id="genres" formControlName="genres" [items]="genres"
+                           bindLabel="name" bindValue="id" placeholder="Выберите жанры" [multiple]="true">
+                </ng-select>
+            </ng-container>
+            <!-- <input cFormControl placeholder="хз-панк" type="text" id="genres" formControlName="genres"> -->
         </c-col>
         <c-col md="6">
             <label cLabel for="artists">Исполнители</label>
-            <input cFormControl placeholder="хз + хз" type="text" id="artists" formControlName="artists">
+            <ng-container *ngIf="artists; else loadingBlock">
+                <ng-select cFormControl id="artists" formControlName="artists" [items]="artists"
+                           bindLabel="name" bindValue="id" placeholder="Выберите исполнителей" [multiple]="true">
+                </ng-select>
+            </ng-container>
+            <!-- <input cFormControl placeholder="хз + хз" type="text" id="artists" formControlName="artists"> -->
         </c-col>
     </c-row>
     <c-row class="g-3">
         <c-col md="6">
             <label cLabel for="releases">Релизы</label>
-            <input cFormControl placeholder="хз хз" type="text" id="releases" formControlName="releases">
+            <!-- <ng-container *ngIf="releases; else loadingBlock">
+                <ng-select cFormControl id="releases" formControlName="releases" [items]="releases"
+                           bindLabel="name" bindValue="id" placeholder="Выберите релизы" [multiple]="true">
+                </ng-select>
+            </ng-container> -->
+            <ng-container *ngIf="releases; else loadingBlock">
+                <ng-select cFormControl id="releases" formControlName="releases"
+                    [items]="releases" bindLabel="name"
+                    placeholder="Выберите релизы" [multiple]="true">
+
+                    <!-- Custom label template -->
+                    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                      <span>{{ customReleaseLabel(item) }}</span>
+                      <span class="ng-value-icon right" (click)="clear(item)">×</span>
+                    </ng-template>
+                    
+                    <!-- Custom option template -->
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                      <span>{{ customReleaseLabel(item) }}</span>
+                    </ng-template>
+                  
+                  </ng-select>
+            </ng-container>
+            
         </c-col>
         <c-col md="6">
             <label cLabel for="songs">Песни</label>
-            <input cFormControl placeholder="я хз" type="text" id="songs" formControlName="songs">
+            <ng-container *ngIf="songs; else loadingBlock">
+                <ng-select cFormControl id="songs" formControlName="songs"
+                    [items]="songs" bindLabel="name"
+                    placeholder="Выберите песни" [multiple]="true">
+            
+                    <!-- Custom label template -->
+                    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                        <span>{{ customSongLabel(item) }}</span>
+                        <span class="ng-value-icon right" (click)="clear(item)">×</span>
+                    </ng-template>
+                                
+                    <!-- Custom option template -->
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                        <span>{{ customSongLabel(item) }}</span>
+                    </ng-template>
+                </ng-select>
+            </ng-container>
         </c-col>
     </c-row>
  
@@ -40,3 +89,8 @@
     </c-row>
 </form>
   
+<ng-template #loadingBlock >
+    
+    <div style="height: 80vh;display: flex; justify-content: center; align-items: center;"> <h5>Loading...</h5> </div>
+    
+</ng-template>

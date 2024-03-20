@@ -8,7 +8,7 @@ export interface FlatUserDto {
     socials: Map<string, string>;
     email: string;
     artists: FlatArtistDto[];
-    genres: GenreDto[];
+    genres: FlatGenreDto[];
     instruments: FlatInstrumentDto[];
     releases: FlatReleaseDto[];
     songs: FlatSongDto[];
@@ -18,8 +18,17 @@ export interface FlatArtistDto {
     id: number;
     name: string;
   }
+
+export interface FlatReleaseWtihArtistsDto {
+  id: number;
+  name: string;
+  releaseType: string;
+  releaseYear: number;
+  coverImageUrl: string;
+  artists: FlatArtistDto[];
+}
   
-export interface GenreDto {
+export interface FlatGenreDto {
     id: number;
     name: string;
   
@@ -45,4 +54,10 @@ export interface FlatSongDto {
     id: number;
     name: string;
   }
+
+export interface FlatSongWithArtistsDto {
+  id: number;
+  name: string;
+  artists: FlatArtistDto[];
+}
   

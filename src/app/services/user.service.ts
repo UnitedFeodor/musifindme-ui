@@ -36,6 +36,17 @@ export class UserService {
       );
   }
 
+  getUserByEmail(email: string): Observable<FullUserDto> {
+    const url = `${this.apiUrl}/search?email=${email}`;
+    console.log(`fetching user with email`, email);
+    return this.http.get<FullUserDto>(url)
+      .pipe(
+        tap(_ => console.log(`Fetched user with email ${email}`)),
+        catchError(this.handleError<FullUserDto>('getUserByEmail'))
+      );
+  }
+
+ 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   

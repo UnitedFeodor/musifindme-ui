@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { Step } from '../register-form-container/register-form-container.component';
 import { CommonModule } from '@angular/common';
 import { CardModule, FormModule, GridModule } from '@coreui/angular';
+import { UserService } from '../../services/user.service';
+import { EmailNotTakenValidator } from '../../validators/email-not-taken.validator';
 
 @Component({
   selector: 'app-login-info',
@@ -18,13 +20,16 @@ export class LoginInfoComponent implements OnInit {
   @Output() changeStep: EventEmitter<'forward' | 'back'> = new EventEmitter<'forward' | 'back'>()
   public loginInfoForm!: FormGroup;
 
-  constructor(private _fb: FormBuilder) {}
+  private emailNotTakenValidator = EmailNotTakenValidator.createValidator(this.userService)
+
+  constructor(private _fb: FormBuilder, private userService: UserService ) {}
 
   ngOnInit() {
     if (this.startingForm){
       this.loginInfoForm = this._fb.group(this.startingForm)
 
       this.loginInfoForm.get('email')!.setValidators([Validators.required, Validators.email]);
+      this.loginInfoForm.get('email')!.setAsyncValidators([this.emailNotTakenValidator]);
       this.loginInfoForm.get('password')!.setValidators([Validators.required]);
 
       // Update validity after adding validators
@@ -33,8 +38,15 @@ export class LoginInfoComponent implements OnInit {
 
     } else {
       this.loginInfoForm = this._fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required]]
+        email: [
+          '', 
+          [Validators.required, Validators.email],
+          [this.emailNotTakenValidator]
+        ],
+        password: [
+          '', 
+          [Validators.required]
+        ]
       })
     }
     this.subformInitialized.emit(this.loginInfoForm);

@@ -100,6 +100,7 @@ export class PersonalInfoComponent implements OnInit {
         }
       });
   
+      console.log('errors',errors)
       return Object.keys(errors).length ? errors : null;
     };
   }

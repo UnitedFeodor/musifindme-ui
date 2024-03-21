@@ -6,10 +6,21 @@ export function isSupportedSocialByName(network: string): boolean {
 }
 
 export function isSupportedSocialByLink(network: string): boolean {
-  const url = new URL(network);
+  try {
+    const url = new URL(network);
+    const hostname = url.hostname;
+    return socialHostnames.hasOwnProperty(hostname);
+  } catch (error) {
+    console.error('Failed to parse URL:', error);
+    return false;
+  }
+}
+
+export function getSocialNameByLink(link: string): string {
+  const url = new URL(link);
   const hostname = url.hostname;
 
-  return socialHostnames.hasOwnProperty(hostname);
+  return socialHostnames[hostname];
 }
 
 export const socialIcons: { [key: string]: string } = {

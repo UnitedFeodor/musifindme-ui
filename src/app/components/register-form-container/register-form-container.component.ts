@@ -9,6 +9,7 @@ import { MusicFavoritesInfoComponent } from "../music-favorites-info/music-favor
 import { CardModule } from '@coreui/angular';
 import { CreateUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
+import { getSocialNameByLink } from '../../app.utils';
 
 export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavoritesInfo';
 @Component({
@@ -84,6 +85,7 @@ export class RegisterFormContainerComponent implements OnInit {
       }
     );
   }
+  getSocialNameByLink = getSocialNameByLink
 
   mapFormDataToCreateUserDto(data: any): CreateUserDto {
     const mappedData: CreateUserDto = {
@@ -93,9 +95,10 @@ export class RegisterFormContainerComponent implements OnInit {
       description: data.searchInfo.description,
       searchingFor: data.searchInfo.searchingFor,
       socials: data.personalInfo.socials.reduce((acc: any, curr: any, index: number) => {
-        acc[`additionalProp${index + 1}`] = curr.link;
+
+        acc[getSocialNameByLink(curr.link)] = curr.link;
         return acc;
-      }, {}), // TODO parse link names of social networks
+      }, {}), //TODO validate email duplicates
       email: data.loginInfo.email,
       password: data.loginInfo.password,
       artists: data.musicFavoritesInfo.artists,

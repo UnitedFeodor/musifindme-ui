@@ -12,71 +12,65 @@
                         <!-- Add debug logging -->
                         <!-- {{ social.key }}: {{ social.value }} : {{socialIcons[social.key.toLowerCase()]}} -->
                         <!-- End of debug logging -->
-                        <a class="px-2" cNavLink routerLink={{social.value}}>
+                        <a class="px-2" cNavLink href={{social.value}}>
+                            
                             <svg cIcon name="{{socialIcons[social.key.toLowerCase()]}}" size="xl"></svg>
                         </a>
                     </ng-container>
                 </ng-container>
             </div>
-            <!-- <div style=" box-sizing: border-box; padding-inline: 5px;" class="text-center">
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibTelegramPlane" size="xl"></svg></a>
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibVk" size="xl"></svg></a>
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibFacebook" size="xl"></svg></a>
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibSpotify" size="xl"></svg></a>
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibAppleMusic" size="xl"></svg></a>
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibSoundcloud" size="xl"></svg></a>    
-                <a class="px-2" cNavLink routerLink="/help"> <svg cIcon name="cibYandex" size="xl"></svg></a> 
-            </div> -->
+            
         </c-col>
         <!--TODO insert actual data-->
         <c-col md="3">
-                <h4 cCardTitle>{{user.name}}, {{user.age}} </h4> 
-                <h5 cCardTitle>Инстурменты </h5>
-                <p cCardText *ngFor="let instrument of user.instruments; let last = last">
+                <h4  cCardTitle>{{user.name}}, {{user.age}} </h4> 
+                <h5 class="mt-3" cCardTitle>Инстурменты </h5>
+                <span cCardText *ngFor="let instrument of user.instruments; let last = last">
                     {{ instrument.name }}{{ !last ? ', ' : '' }}
                     <!-- {{ user.instruments.map((e: InstrumentDto) => e.name).join(', ') }} -->
                     <!-- Гитара, Бас, Барабаны и тд -->
-                </p>
-                <h5 cCardTitle>Жанры </h5>
-                <p cCardText *ngFor="let genre of user.genres; let last = last">
+                </span>
+                
+                <h5 class="mt-3" cCardTitle>Жанры </h5>
+                <span cCardText *ngFor="let genre of user.genres; let last = last">
                     {{ genre.name }}{{ !last ? ', ' : '' }}
                     <!-- Пост-панк, дрим-поп, шугейз -->
-                </p>
-                <h5 cCardTitle>Кого ищу </h5>
-                <p cCardText>
+                </span>
+                <h5 class="mt-3" cCardTitle>Кого ищу </h5>
+                <span cCardText>
                     {{user.searchingFor}}
                     <!-- Барабанщика в группу -->
-                </p>
+                </span>
         </c-col>
         <c-col md="3">
             <h4 cCardTitle>Минск </h4>
-            <h5 cCardTitle>О себе </h5>
-            <p cCardText>
+            <h5 class="mt-3" cCardTitle>О себе </h5>
+            <span cCardText>
                 {{user.description}}
                 <!-- This is a wider card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.This is a wider card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer. -->
-            </p>
+            </span>
             
         </c-col>
         <c-col md="3">
             <h4 cCardTitle>Музыка </h4>
-            <h5 cCardTitle>Исполнители </h5>
-            <p cCardText *ngFor="let artist of user.artists; let last = last">
+            <h5 class="mt-3" cCardTitle>Исполнители </h5>
+            <span cCardText *ngFor="let artist of user.artists; let last = last">
                 {{ artist.name }}{{ !last ? ', ' : '' }}
                 <!-- гой дивижн, радиобэд, кофе из виталюра, дикпиксис -->
-            </p>
-            <h5 cCardTitle>Песни </h5>
-            <p cCardText *ngFor="let song of user.songs; let last = last">
+            </span>
+            <h5 class="mt-3" cCardTitle>Песни </h5>
+            <span cCardText *ngFor="let song of user.songs; let last = last">
                 {{ song.name }}{{ !last ? ', ' : '' }}
                 <!-- я сосал у лимонова -->
-            </p>
-            <h5 cCardTitle>Релизы </h5>
-            <p cCardText *ngFor="let release of user.releases; let last = last">
+            </span>
+            <h5 class="mt-3" cCardTitle>Релизы </h5>
+            <span cCardText *ngFor="let release of user.releases; let last = last">
                 {{ release.name }}{{ !last ? ', ' : '' }}
                 <!-- the money store - death grips -->
-            </p>
+            </span>
         </c-col>
     </c-row>
     <c-row>

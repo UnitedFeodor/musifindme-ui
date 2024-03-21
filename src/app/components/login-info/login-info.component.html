@@ -4,6 +4,14 @@
     <c-col md="6">
         <label cLabel for="email">Эл. почта</label>
         <input cFormControl placeholder="mymail@mail.com" type="email" id="email" formControlName="email">
+        
+        <div *ngIf="loginInfoForm.get('email')?.hasError('emailTaken')" class="text-danger">
+          Этот адрес эл. почты уже занят
+        </div>
+        <div *ngIf="loginInfoForm.get('email')?.hasError('email')" class="text-danger">
+          Неверный адрес эл. почты 
+        </div>
+        
     </c-col>
     <c-col md="6">
       <!-- <div class="text-center"> -->

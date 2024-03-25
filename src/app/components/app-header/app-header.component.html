@@ -1,9 +1,11 @@
 <c-header>
-  <c-container fluid >
-    <c-header-brand [routerLink] class="fw-bold text-decoration-underline"> <a cNavLink routerLink="/">MusiFindMe</a></c-header-brand>
+  <c-container fluid>
+    <c-header-brand [routerLink] class="fw-bold text-decoration-underline">
+      <a cNavLink routerLink="/">MusiFindMe</a>
+    </c-header-brand>
     <c-header-nav class="ms-auto">
       <c-nav-item>
-        <a cNavLink routerLink="/help">Помощь</a> <!-- TODO add proper links--> 
+        <a cNavLink routerLink="/help">Помощь</a>
       </c-nav-item>
       <c-nav-item>
         <a cNavLink routerLink="/people">Люди</a>
@@ -11,21 +13,26 @@
       <c-nav-item>
         <a cNavLink routerLink="/events">События</a>
       </c-nav-item>
-      <c-nav-item >
-        <a cNavLink routerLink="/profile">Профиль</a>
+      
+      <c-nav-item *ngIf="!isLoggedIn()">
+        <button class="btn btn-outline-primary mx-2" routerLink="/signin">Вход</button>
       </c-nav-item>
-      <c-avatar src="../../assets/img/ted.jpg" ></c-avatar> <!-- TODO add real image--> 
-      <c-dropdown alignment="end">
-        <a cHeaderToggler cDropdownToggle cNavLink [caret]="false"></a>
+      <!-- <c-nav-item *ngIf="!isLoggedIn()">
+        <a cNavLink routerLink="/register">Регистрация</a>
+      </c-nav-item> -->
+      <c-nav-item *ngIf="!isLoggedIn()">
+        <button class="btn btn-outline-success" routerLink="/register">Регистрация</button>
+      </c-nav-item>
+      
+      <c-dropdown *ngIf="isLoggedIn()" variant="nav-item">
+        <a [routerLink] cDropdownToggle cNavLink >{{getUserName()}}</a>
         <ul cDropdownMenu>
-          <li><a [routerLink] cDropdownItem>Action</a></li>
-          <li><a [routerLink] cDropdownItem>Another action</a></li>
-          <li>
-            <hr cDropdownDivider>
-          </li>
-          <li><a [routerLink] cDropdownItem>Something else</a></li>
+          <li><a routerLink="/profile" cDropdownItem>Профиль</a></li>
+          <li><hr cDropdownDivider></li>
+          <li><a [routerLink] cDropdownItem (click)="logout()">Выйти</a></li>
         </ul>
       </c-dropdown>
+      <c-avatar *ngIf="isLoggedIn()" src="../../assets/img/ted.jpg"></c-avatar> 
     </c-header-nav>
   </c-container>
 </c-header>

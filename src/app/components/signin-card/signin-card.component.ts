@@ -57,7 +57,7 @@ export class SigninCardComponent implements OnInit {
         // Handle successful sign-in
         console.log('Tried to sign in', user);
         this.storageService.saveUser(user);
-        this.router.navigate(['/']);
+        this.router.navigate(['/profile']);
       },
       error: error => {
         // Handle sign-in error

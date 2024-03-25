@@ -6,6 +6,7 @@ import { HomeCardComponent } from './components/home-card/home-card.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { EditProfileCardComponent } from './components/edit-profile-card/edit-profile-card.component';
 import { RegisterFormContainerComponent } from './components/register-form-container/register-form-container.component';
+import { SigninCardComponent } from './components/signin-card/signin-card.component';
 
 // TODO add routes
 export const routes: Routes = [
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'profile', component: ProfilePageComponent },
     { path: 'profile/edit', component: EditProfileCardComponent},
     { path: 'register', component: RegisterFormContainerComponent},
+    { path: 'signin', component: SigninCardComponent},
 
 ];

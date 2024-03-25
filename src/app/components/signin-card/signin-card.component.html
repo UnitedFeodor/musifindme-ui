@@ -1,0 +1,22 @@
+<form [formGroup]="signinForm" (ngSubmit)="loginUser()" class="p-5">
+    
+    <c-row class="g-3">
+      <c-col md="6">
+          <label cLabel for="email">Эл. почта</label>
+          <input cFormControl placeholder="mymail@mail.com" type="email" id="email" formControlName="email">
+          
+      </c-col>
+      <c-col md="6">
+          <label cLabel for="password">Пароль</label>
+          <input cFormControl type="password" id="password" formControlName="password">
+      </c-col>
+    </c-row>
+    <c-row class="g-3 py-2">
+      <c-col md="6">
+  
+      </c-col>
+      <c-col md="6">
+        <button [disabled]="signinForm.invalid" cFormControl type="submit" class="btn btn-primary">Войти</button>
+      </c-col>
+    </c-row>
+</form>

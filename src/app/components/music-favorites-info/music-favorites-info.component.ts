@@ -12,7 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-music-favorites-info',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CardModule, GridModule, FormModule,NgSelectModule,],
+  imports: [ReactiveFormsModule, CommonModule, CardModule, GridModule, FormModule, NgSelectModule,],
   templateUrl: './music-favorites-info.component.html',
   styleUrl: './music-favorites-info.component.scss'
 })

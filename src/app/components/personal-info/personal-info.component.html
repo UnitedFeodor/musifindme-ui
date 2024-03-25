@@ -24,6 +24,10 @@
                 <span class="px-2">
                     <button type="button" class="btn btn-outline-success btn-sm"  (click)="addSocial()">+ Добавить</button>
                 </span>
+                <span>
+                    <label cLabel>Пример:&nbsp; </label>
+                    <label cFormText> https://vk.com/frankblackfrancis</label>
+                </span>
             </div>
             <div formArrayName="socials">
                 <div *ngFor="let social of socials.controls; let i = index" [formGroupName]="i">

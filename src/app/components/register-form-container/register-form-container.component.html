@@ -27,6 +27,9 @@
       (changeStep)="changeStep('musicFavoritesInfoStep', $event)"
       (submitForm)="submitForm()"
     ></app-music-favorites-info >
+    <div *ngIf="errorMessage" class="text-danger text-center">
+      {{ errorMessage }}
+    </div>
   </c-card>
 
 </ng-container>

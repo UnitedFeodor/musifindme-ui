@@ -10,6 +10,7 @@ import { CardModule } from '@coreui/angular';
 import { CreateUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { getSocialNameByLink } from '../../app.utils';
+import { AuthService } from '../../services/auth.service';
 
 export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavoritesInfo';
 @Component({
@@ -24,8 +25,9 @@ export class RegisterFormContainerComponent implements OnInit {
   private currentStepBs: BehaviorSubject<Step> = new BehaviorSubject<Step>('loginInfo');
   public currentStep$: Observable<Step> = this.currentStepBs.asObservable();
   public userForm!: FormGroup;
+  public errorMessage: string | null = null;
 
-  constructor(private _fb: FormBuilder, private userService: UserService) {}
+  constructor(private _fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit() {
     this.userForm = this._fb.group({
@@ -38,6 +40,7 @@ export class RegisterFormContainerComponent implements OnInit {
   
   subformInitialized(name: string, group: FormGroup) {
       this.userForm.setControl(name, group);
+      this.errorMessage = null;
   }
 
   changeStep(currentStep: string, direction: 'forward' | 'back') {
@@ -68,22 +71,26 @@ export class RegisterFormContainerComponent implements OnInit {
         break;
     }
   }
+
+  
+
   submitForm() {
     const formValues = this.userForm.value;
     console.log('submit formVaues',formValues)
     const createUserDto = this.mapFormDataToCreateUserDto(formValues)
     console.log('submit createUserDto',createUserDto)
 
-    this.userService.createUser(createUserDto).subscribe(
-      (response) => {
+    this.authService.registerUser(createUserDto).subscribe({
+      next: (response) => {
         // Handle success response
         console.log('User created successfully:', response);
       },
-      (error) => {
+      error: (error) => {
         // Handle error response
         console.error('Error creating user:', error);
+        this.errorMessage = 'Ошибка, попробуйте повторить регистрацию позже';
       }
-    );
+    });
   }
   getSocialNameByLink = getSocialNameByLink
 
@@ -98,7 +105,7 @@ export class RegisterFormContainerComponent implements OnInit {
 
         acc[getSocialNameByLink(curr.link)] = curr.link;
         return acc;
-      }, {}), //TODO validate email duplicates
+      }, {}),
       email: data.loginInfo.email,
       password: data.loginInfo.password,
       artists: data.musicFavoritesInfo.artists,

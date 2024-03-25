@@ -43,12 +43,24 @@ export interface CreateUserDto {
     instruments: FlatInstrumentDto[];
     releases: FlatReleaseDto[];
     songs: FlatSongDto[];
+    roles: RoleDto[];
   }
   
+export interface LoginRequestDto {
+  email: string;
+  password: string
+}
+
 export interface FlatArtistDto {
     id: number;
     name: string;
   }
+
+export interface RoleDto {
+  id: number;
+  name: string;
+}
+
 
 export interface FlatReleaseWtihArtistsDto {
   id: number;

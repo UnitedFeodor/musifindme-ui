@@ -16,5 +16,5 @@ import { ProfileCardComponent } from '../../components/profile-card/profile-card
   styleUrl: './match-page.component.scss'
 })
 export class MatchPageComponent {
-  
+  userId: number = 2
 }

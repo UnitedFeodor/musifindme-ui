@@ -23,6 +23,7 @@ export class ProfileCardComponent implements OnInit{
   socialIcons: { [key: string]: string } = socialIcons
   @Input() editButtonLabel: string = ''; // TODO maybe change to something else
   @Input() editButtonRouterLink: string = '';
+  @Input() userId: number | null = null;
 
   
   constructor(
@@ -44,9 +45,9 @@ export class ProfileCardComponent implements OnInit{
   }
 
   fetchUser(): void {
-    const storedUser = this.storageService.getUser();
-    if (storedUser) {
-      this.userService.getUser(storedUser.id)
+
+    if(this.userId) {
+      this.userService.getUser(this.userId)
         .subscribe({
           next: (data: FullUserDto) => {
             this.user = data;

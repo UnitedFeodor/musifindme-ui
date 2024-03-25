@@ -9,9 +9,6 @@
             <div style=" box-sizing: border-box; padding-inline: 5px;" class="text-center">
                 <ng-container *ngFor="let social of user.socials | keyvalue">
                     <ng-container *ngIf="isSupportedSocial(social.key)">
-                        <!-- Add debug logging -->
-                        <!-- {{ social.key }}: {{ social.value }} : {{socialIcons[social.key.toLowerCase()]}} -->
-                        <!-- End of debug logging -->
                         <a class="px-2" cNavLink href={{social.value}}>
                             
                             <svg cIcon name="{{socialIcons[social.key.toLowerCase()]}}" size="xl"></svg>

@@ -4,9 +4,11 @@ import { RouterLink } from '@angular/router';
 import { CardModule, GridModule, AvatarModule, ButtonModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { isObjectNotEmpty, socialIcons } from '../../app.utils';
-import { FlatUserDto } from '../../interfaces/user';
+import { FlatUserDto, FullUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundcloud,cibYandex, cibInstagram, cibTwitter } from '@coreui/icons';
+import { StorageService } from '../../services/storage.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-profile-card',
@@ -16,14 +18,18 @@ import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundclo
   styleUrl: './profile-card.component.scss'
 })
 export class ProfileCardComponent implements OnInit{
-  user: FlatUserDto = {} as FlatUserDto;
+  user: FullUserDto = {} as FullUserDto;
   isObjectNotEmpty = isObjectNotEmpty
   socialIcons: { [key: string]: string } = socialIcons
   @Input() editButtonLabel: string = ''; // TODO maybe change to something else
   @Input() editButtonRouterLink: string = '';
 
   
-  constructor(public iconSet: IconSetService, private userService: UserService) {
+  constructor(
+    public iconSet: IconSetService, 
+    private userService: UserService,
+    private storageService: StorageService
+  ) {
     // iconSet singleton
     iconSet.icons = { 
       cibTelegramPlane, cibVk, cibFacebook, cibSpotify, cibAppleMusic, cibSoundcloud, cibYandex, cibInstagram, cibTwitter, 
@@ -34,15 +40,25 @@ export class ProfileCardComponent implements OnInit{
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     this.fetchUser()
     
+    
   }
 
   fetchUser(): void {
-    this.userService.getUser(22)
-      .subscribe(
-        (data: FlatUserDto) => {
-        this.user = data;
-        console.log('User fetched successfully:', data);
+    const storedUser = this.storageService.getUser();
+    if (storedUser) {
+      this.userService.getUser(storedUser.id)
+        .subscribe({
+          next: (data: FullUserDto) => {
+            this.user = data;
+            console.log('User fetched successfully:', data);
+          },
+          error: (error) => {
+            console.log('Error fetching user',error)
+          }
       });
+    } else {
+      this.user = {} as FullUserDto;
+    }
   }
 
   isSupportedSocial(network: string): boolean {

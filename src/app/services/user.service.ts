@@ -11,13 +11,13 @@ export class UserService {
   apiUrl = "http://localhost:8081/api/users"
   constructor(private http: HttpClient) { }
 
-  getUser(id: number): Observable<FlatUserDto> {
+  getUser(id: number): Observable<FullUserDto> {
     const url = `${this.apiUrl}/${id}`;
     console.log(`fetching user with id`,id)
-    return this.http.get<FlatUserDto>(url)
+    return this.http.get<FullUserDto>(url)
       .pipe(
         tap(_ => console.log(`Fetched user with id ${id}`)),
-        catchError(this.handleError<FlatUserDto>('getUser'))
+        catchError(this.handleError<FullUserDto>('getUser'))
       );
     
   }

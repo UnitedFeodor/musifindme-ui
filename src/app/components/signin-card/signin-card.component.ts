@@ -4,8 +4,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardModule, GridModule, FormModule } from '@coreui/angular';
 import { AuthService } from '../../services/auth.service';
 import { LoginRequestDto } from '../../interfaces/user';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-signin-card',
@@ -21,11 +22,14 @@ export class SigninCardComponent implements OnInit {
   });
 
   message: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private _fb: FormBuilder,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storageService: StorageService,
+    private router: Router  
   ) {
 
     route.params.subscribe(params=>this.message=params["message"]);
@@ -52,11 +56,13 @@ export class SigninCardComponent implements OnInit {
       next: user => {
         // Handle successful sign-in
         console.log('Tried to sign in', user);
-        
+        this.storageService.saveUser(user);
+        this.router.navigate(['/']);
       },
       error: error => {
         // Handle sign-in error
         console.error('Error signing in:', error);
+        this.errorMessage = `Ошибка аутентификации`
       }
     });
   }

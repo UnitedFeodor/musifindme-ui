@@ -4,9 +4,10 @@ import { RouterLink } from '@angular/router';
 import { CardModule, GridModule, AvatarModule, ButtonModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { isObjectNotEmpty, isSupportedSocialByName, socialIcons } from '../../app.utils';
-import { FlatUserDto } from '../../interfaces/user';
+import { FlatUserDto, FullUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundcloud,cibYandex, cibInstagram, cibTwitter } from '@coreui/icons';
+import { StorageService } from '../../services/storage.service';
 
 
 @Component({
@@ -17,12 +18,16 @@ import { cibTelegramPlane,cibVk,cibFacebook,cibSpotify,cibAppleMusic,cibSoundclo
   styleUrl: './edit-profile-card.component.scss'
 })
 export class EditProfileCardComponent {
-  user: FlatUserDto = {} as FlatUserDto;
+  user: FullUserDto = {} as FullUserDto;
   isObjectNotEmpty = isObjectNotEmpty
   isSupportedSocial = isSupportedSocialByName
   socialIcons = socialIcons
   
-  constructor(public iconSet: IconSetService, private userService: UserService) {
+  constructor(
+    public iconSet: IconSetService, 
+    private userService: UserService,
+    private storageService: StorageService
+  ) {
     // iconSet singleton
     iconSet.icons = { 
       cibTelegramPlane, 
@@ -46,14 +51,22 @@ export class EditProfileCardComponent {
   }
 
   fetchUser(): void {
-    this.userService.getUser(2)
-      .subscribe(
-        (data: FlatUserDto) => {
-        this.user = data;
-        console.log('User fetched successfully:', data);
+    const storedUser = this.storageService.getUser();
+    if (storedUser) {
+      this.userService.getUser(storedUser.id)
+        .subscribe({
+          next: (data: FullUserDto) => {
+            this.user = data;
+            console.log('User fetched successfully:', data);
+          },
+          error: (error) => {
+            console.log('Error fetching user',error)
+          }
       });
+    } else {
+      this.user = {} as FullUserDto;
+    }
   }
-
   
 
 

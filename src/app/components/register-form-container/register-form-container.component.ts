@@ -11,6 +11,7 @@ import { CreateUserDto } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { getSocialNameByLink } from '../../app.utils';
 import { AuthService } from '../../services/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavoritesInfo';
 @Component({
@@ -18,7 +19,7 @@ export type Step = 'personalInfo' | 'loginInfo' | 'searchInfo' | 'musicFavorites
     standalone: true,
     templateUrl: './register-form-container.component.html',
     styleUrl: './register-form-container.component.scss',
-    imports: [CardModule ,PersonalInfoComponent, LoginInfoComponent, CommonModule, ReactiveFormsModule, SearchInfoComponent, MusicFavoritesInfoComponent]
+    imports: [CardModule ,PersonalInfoComponent, LoginInfoComponent, CommonModule, ReactiveFormsModule, SearchInfoComponent, MusicFavoritesInfoComponent, RouterLink]
 })
 export class RegisterFormContainerComponent implements OnInit {
 
@@ -27,7 +28,11 @@ export class RegisterFormContainerComponent implements OnInit {
   public userForm!: FormGroup;
   public errorMessage: string | null = null;
 
-  constructor(private _fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private _fb: FormBuilder, 
+    private authService: AuthService,
+    private router: Router  
+  ) {}
 
   ngOnInit() {
     this.userForm = this._fb.group({
@@ -84,6 +89,7 @@ export class RegisterFormContainerComponent implements OnInit {
       next: (response) => {
         // Handle success response
         console.log('User created successfully:', response);
+        this.router.navigate(['/signin'], { queryParams: { message: 'Аккаунт успешно зарегистрирован' } });
       },
       error: (error) => {
         // Handle error response

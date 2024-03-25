@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardModule, GridModule, FormModule } from '@coreui/angular';
 import { AuthService } from '../../services/auth.service';
 import { LoginRequestDto } from '../../interfaces/user';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-signin-card',
@@ -12,16 +14,31 @@ import { LoginRequestDto } from '../../interfaces/user';
   templateUrl: './signin-card.component.html',
   styleUrl: './signin-card.component.scss'
 })
-export class SigninCardComponent {
+export class SigninCardComponent implements OnInit {
   signinForm = this._fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]]
   });
 
+  message: string | null = null;
+
   constructor(
     private _fb: FormBuilder,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {
+
+    route.params.subscribe(params=>this.message=params["message"]);
+    console.log(this.message)
+
+  }
+
+  ngOnInit() {
+    this.route.queryParamMap.subscribe(
+      params => this.message=params.get("message")
+    );
+    console.log(this.message)
+  }
 
   loginUser() {
     const email = this.signinForm.get('email')?.value || ''; // TODO i don't know may be errors here

@@ -1,4 +1,7 @@
 <form [formGroup]="signinForm" (ngSubmit)="loginUser()" class="p-5">
+    <div *ngIf="message" class="text-success text-center">
+      {{message}}
+    </div>
     
     <c-row class="g-3">
       <c-col md="6">
